@@ -1,2 +1,2 @@
-# Boost-Periodic-Task-Scheduler
-A Periodic Task Scheduler with Boost
+# RapidJSONSerDe
+Serialization/Deserialization of C++ objects to/from JSON using RapidJSON
