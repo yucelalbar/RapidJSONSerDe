@@ -1,93 +1,64 @@
-#include <iostream>
-#include <memory>
-#include <mutex>
-
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
+#include <chrono>
+#include "QosData.h"
 
 
-class Task {
-    public:
-        void execute() {
-            std::cout << "Task executed" << std::endl;
-        }
-};
+using namespace std::chrono;
 
-class Timer {
-    public:
-        Timer(boost::asio::io_service& ioService, const int32_t& timerMilliSecs)
-            : m_timer(ioService)
-            , m_timerMilliSecs(timerMilliSecs) {
+int main (int argc, const char * argv[]) {
 
-        }
+    for(auto i = 0; i < 101; ++i) {
+        /*Prep object*/
+        Rapid::QosData qosData{};
 
-        void start(boost::function<void(const boost::system::error_code&)> cb) {
-            m_timer.expires_from_now(boost::posix_time::milliseconds(m_timerMilliSecs));
-            m_timer.async_wait(cb);
-        }
+        qosData.setQosId("DefQos");
+        qosData.set5qi(5);
+        qosData.setMaxbrDl("5 Mbps");
+        qosData.setMaxbrUl("1 Mbps");
+        qosData.setGbrUl("2 Kbps");
+        qosData.setGbrDl("3 Kbps");
+        qosData.setQnc(true);
+        qosData.setPriorityLevel(10);
+        qosData.setAverWindow(50);
+        qosData.setMaxDataBurstVol(100);
+        qosData.setReflectiveQos(false);
+        qosData.setSharingKeyDl("1 bps");
+        qosData.setSharingKeyUl("2 bps");
+        qosData.setMaxPacketLossRateDl(10);
+        qosData.setMaxPacketLossRateUl(20);
+        qosData.setDefQosFlowIndication(false);
 
-    private:
-        boost::asio::deadline_timer m_timer;
-        int32_t m_timerMilliSecs;
-};
+        Rapid::Arp arp;
+        arp.setPriorityLevel(15);
+        arp.setPreemptCap("CAPABLE");
+        arp.setPreemptVuln("VULNERABLE");
+        qosData.setArp(std::move(arp));
 
-class TimerScanner {
-    public:
-        TimerScanner(boost::asio::io_service& ioService, const int32_t& timerGranularity)
-                    : m_ioService(ioService) {
-            m_timer = std::make_unique<Timer>(ioService, timerGranularity);
-            m_cb = boost::bind(&TimerScanner::onTimerExec, this, _1);
-        }
-        void start() {
-            m_timer->start(m_cb);
-        }
+        auto start = high_resolution_clock::now();
 
-        void addTask(const boost::function<void()>& task) {
-            std::lock_guard<std::mutex> lg(m_mtx);
-            m_tasks.push_back(task);
-        }
-        void onTimerExec(const boost::system::error_code& ec)
-        {
-            std::lock_guard<std::mutex> lg(m_mtx);
-            if (ec != boost::asio::error::operation_aborted) {
-                start();
-                /*Execute tasks asynchronously*/
-                for(const auto& task : m_tasks) {
-                    m_ioService.post(task);
-                }
-                /*Clear tasks list for next onTimerExec*/
-                m_tasks.clear();
+        /*Serialize object with rapidjson*/
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 
-            }
-        }
+        qosData.Serialize(&writer);
 
-    private:
-        boost::asio::io_service& m_ioService;
-        std::mutex m_mtx;
-        std::vector<boost::function<void()>> m_tasks;
-        std::unique_ptr<Timer> m_timer;
-        boost::function<void(const boost::system::error_code& ec)> m_cb;
-};
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
 
+        std::cout << "Rapidjson Serialized buffer Duration: " << duration.count() << std::endl;
 
-int main(int argc, char* argv[])
-{
-    boost::asio::io_service service;
-    int32_t millisecs = 1000;
+        Rapid::QosData qosData2{};
 
-    TimerScanner scanner(service, millisecs);
+        start = high_resolution_clock::now();
 
-    auto task1 = std::make_shared<Task>();
-    auto task1Cb = boost::bind(&Task::execute, task1);
-    auto task2 = std::make_shared<Task>();
-    auto task2Cb = boost::bind(&Task::execute, task2);
-    scanner.addTask(task1Cb);
-    scanner.addTask(task2Cb);
+        qosData2.Deserialize(buffer.GetString());
 
-    scanner.start();
+        stop = high_resolution_clock::now();
+        duration = duration_cast<microseconds>(stop - start);
 
-    service.run();
+        //std::cout << "Qos Id : " << qosData2.getQosId() << " 5qi : " << qosData2.get5qi() << "  Duration: " << duration.count() << "\n";
+        std::cout << "Rapidjson Deserialization Duration: " << duration.count() << "\n";
+
+    }
 
     return 0;
 }

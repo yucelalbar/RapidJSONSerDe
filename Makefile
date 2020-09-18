@@ -1,6 +1,6 @@
 CC      := g++
-CFLAGS  := -std=c++14 -Wall -g
-LFLAGS  := -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lpthread
+CFLAGS  := -std=c++14 -Wall -O3
+LFLAGS  := -lboost_system -lboost_filesystem -lboost_program_options -lboost_thread -lpthread -lssl -lcrypto
 SRCDIR  := src
 OBJDIR  := obj
 DOCDIR  := doc
