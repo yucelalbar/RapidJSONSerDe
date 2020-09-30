@@ -2,7 +2,7 @@
 Serialization/Deserialization of C++ objects to/from JSON using RapidJSON. Entity class is an interface for serialization/deserialization.
 
 # Example:
-        Rapid::QosData qosData{};
+        Rapid::QosData qosData;
 
         qosData.setQosId("DefQos");
         qosData.set5qi(5);
@@ -34,6 +34,6 @@ Serialization/Deserialization of C++ objects to/from JSON using RapidJSON. Entit
         qosData.Serialize(&writer);
         
         /*Deserialize string buffer to object*/
-        Rapid::QosData qosData2{};
+        Rapid::QosData qosData2;
 
         qosData2.Deserialize(buffer.GetString());
