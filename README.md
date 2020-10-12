@@ -1,5 +1,5 @@
 # RapidJSONSerDe
-RapidJsonSerDe is a header-only C++ library that serializes object instances and deserializes stringified json object.
+RapidJsonSerDe is a header-only C++ library that serializes object instances and deserializes stringified json objects.
 
 # Installation
 Just copy the "include/Entity.h" file to system or project's include path.
