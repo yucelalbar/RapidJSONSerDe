@@ -13,6 +13,8 @@ Entity class includes 3 methods to implement at derived classes.
 
 You should implement these methods at derived classes by indicating json object's keys:
 
+    //Entity.h
+    
     class Arp: public Entity {
     public:
         //...
