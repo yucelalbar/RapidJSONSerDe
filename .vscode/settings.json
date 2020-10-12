@@ -71,4 +71,5 @@
         "unordered_set": "cpp",
         "string": "cpp"
     },
+    "C_Cpp.dimInactiveRegions": false,
 }

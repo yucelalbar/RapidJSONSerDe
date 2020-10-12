@@ -1,8 +1,8 @@
 
 #include "Arp.h"
 
-namespace Rapid {
-
+namespace RapidJsonSerDe {
+namespace Examples {
 
 Arp::Arp() {
     m_priorityLevel.isSet = false;
@@ -60,35 +60,6 @@ bool Arp::isSetPreemptVuln() const {
     return m_preemptVuln.isSet;
 }
 
-
-bool Arp::Deserialize(const rapidjson::Value & obj)
-{
-    m_priorityLevel.isSet = Entity::Deserialize(&m_priorityLevel.value, obj, "priorityLevel");
-    m_preemptCap.isSet = Entity::Deserialize(&m_preemptCap.value, obj, "preemptCap");
-    m_preemptVuln.isSet = Entity::Deserialize(&m_preemptVuln.value, obj, "preemptVuln");
-    return true;
-}
-
-bool Arp::Serialize(rapidjson::Writer<rapidjson::StringBuffer> * writer) const
-{
-    writer->StartObject();
-
-        if(m_priorityLevel.isSet) {
-            writer->String("priorityLevel");
-            Entity::Serialize(writer, m_priorityLevel.value);
-        }
-        if(m_preemptCap.isSet) {
-            writer->String("preemptCap");
-            Entity::Serialize(writer, m_preemptCap.value);
-        }
-        if(m_preemptVuln.isSet) {
-            writer->String("preemptVuln");
-            Entity::Serialize(writer, m_preemptVuln.value);
-        }
-
-    writer->EndObject();
-    return true;
-}
-
-} // namespace Rapid
+} // namespace Examples
+} // namespace RapidJsonSerDe
 

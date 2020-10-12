@@ -1,7 +1,7 @@
 #include "QosData.h"
 
-namespace Rapid
-{
+namespace RapidJsonSerDe {
+namespace Examples {
 
 QosData::QosData() {
     m_qosId.isSet = false;
@@ -288,111 +288,5 @@ bool QosData::isSetDefQosFlowIndication() const {
     return m_defQosFlowIndication.isSet;
 }
 
-
-bool QosData::Deserialize(const std::string& s)
-{
-    return Entity::Deserialize(s);
-}
-
-bool QosData::Deserialize(const rapidjson::Value & document)
-{
-
-    m_qosId.isSet = Entity::Deserialize(&m_qosId.value, document, "qosId");
-    m__5qi.isSet =  Entity::Deserialize(&m__5qi.value, document, "5qi");
-    m_maxbrUl.isSet = Entity::Deserialize(&m_maxbrUl.value, document, "maxbrUl");
-    m_maxbrDl.isSet = Entity::Deserialize(&m_maxbrDl.value, document, "maxbrDl");
-    m_gbrUl.isSet = Entity::Deserialize(&m_gbrUl.value, document, "gbrUl");
-    m_gbrDl.isSet =  Entity::Deserialize(&m_gbrDl.value, document, "gbrDl");
-    m_arp.isSet = Entity::Deserialize(&m_arp.value, document, "arp");
-    m_qnc.isSet = Entity::Deserialize(&m_qnc.value, document, "qnc");
-    m_priorityLevel.isSet = Entity::Deserialize(&m_priorityLevel.value, document, "priorityLevel");
-    m_averWindow.isSet = Entity::Deserialize(&m_averWindow.value, document, "averWindow");
-    m_maxDataBurstVol.isSet = Entity::Deserialize(&m_maxDataBurstVol.value, document, "maxDataBurstVol");
-    m_reflectiveQos.isSet = Entity::Deserialize(&m_reflectiveQos.value, document, "reflectiveQos");
-    m_sharingKeyDl.isSet = Entity::Deserialize(&m_sharingKeyDl.value, document, "sharingKeyDl");
-    m_sharingKeyUl.isSet = Entity::Deserialize(&m_sharingKeyUl.value, document, "sharingKeyUl");
-    m_maxPacketLossRateDl.isSet = Entity::Deserialize(&m_maxPacketLossRateDl.value, document, "maxPacketLossRateDl");
-    m_maxPacketLossRateUl.isSet = Entity::Deserialize(&m_maxPacketLossRateUl.value, document, "maxPacketLossRateUl");
-    m_defQosFlowIndication.isSet = Entity::Deserialize(&m_defQosFlowIndication.value, document, "defQosFlowIndication");
-    return true;
-}
-
-bool QosData::Serialize(rapidjson::Writer<rapidjson::StringBuffer> * writer) const
-{
-    writer->StartObject();
-
-        if(m_qosId.isSet) {
-            writer->String("qosId");
-            Entity::Serialize(writer, m_qosId.value);
-        }
-        if(m__5qi.isSet) {
-            writer->String("5qi");
-            Entity::Serialize(writer, m__5qi.value);
-        }
-        if(m_maxbrUl.isSet) {
-            writer->String("maxbrUl");
-            Entity::Serialize(writer, m_maxbrUl.value);
-        }
-        if(m_maxbrDl.isSet) {
-            writer->String("maxbrDl");
-            Entity::Serialize(writer, m_maxbrDl.value);
-        }
-        if(m_gbrUl.isSet) {
-            writer->String("gbrUl");
-            Entity::Serialize(writer, m_gbrUl.value);
-        }
-        if(m_gbrDl.isSet) {
-            writer->String("gbrDl");
-            Entity::Serialize(writer, m_gbrDl.value);
-        }
-        if(m_arp.isSet) {
-            writer->String("arp");
-            Entity::Serialize(writer, m_arp.value);
-        }
-        if(m_qnc.isSet) {
-            writer->String("qnc");
-            Entity::Serialize(writer, m_qnc.value);
-        }
-        if(m_priorityLevel.isSet) {
-            writer->String("priorityLevel");
-            Entity::Serialize(writer, m_priorityLevel.value);
-        }
-        if(m_averWindow.isSet) {
-            writer->String("averWindow");
-            Entity::Serialize(writer, m_averWindow.value);
-        }
-        if(m_maxDataBurstVol.isSet) {
-            writer->String("maxDataBurstVol");
-            Entity::Serialize(writer, m_maxDataBurstVol.value);
-        }
-        if(m_reflectiveQos.isSet) {
-            writer->String("reflectiveQos");
-            Entity::Serialize(writer, m_reflectiveQos.value);
-        }
-        if(m_sharingKeyDl.isSet) {
-            writer->String("sharingKeyDl");
-            Entity::Serialize(writer, m_sharingKeyDl.value);
-        }
-        if(m_sharingKeyUl.isSet) {
-            writer->String("sharingKeyUl");
-            Entity::Serialize(writer, m_sharingKeyUl.value);
-        }
-        if(m_maxPacketLossRateDl.isSet) {
-            writer->String("maxPacketLossRateDl");
-            Entity::Serialize(writer, m_maxPacketLossRateDl.value);
-        }
-        if(m_maxPacketLossRateUl.isSet) {
-            writer->String("maxPacketLossRateUl");
-            Entity::Serialize(writer, m_maxPacketLossRateUl.value);
-        }
-        if(m_defQosFlowIndication.isSet) {
-            writer->String("defQosFlowIndication");
-            Entity::Serialize(writer, m_defQosFlowIndication.value);
-        }
-
-    writer->EndObject();
-    return true;
-}
-
-
-} // Rapid
+} // Examples
+} // RapidJsonSerDe
