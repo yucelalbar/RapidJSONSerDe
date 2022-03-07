@@ -212,7 +212,7 @@ inline bool Entity::Deserialize(uint8_t* p, const rapidjson::Value & document, c
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetUint();
     return true;
 }
 
@@ -230,7 +230,7 @@ inline bool Entity::Deserialize(uint16_t* p, const rapidjson::Value & document, 
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetUint();
     return true;
 }
 
@@ -248,7 +248,7 @@ inline bool Entity::Deserialize(uint32_t* p, const rapidjson::Value & document, 
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetUint();
     return true;
 }
 
@@ -257,7 +257,7 @@ inline bool Entity::Deserialize(int64_t* p, const rapidjson::Value & document, c
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetInt64();
     return true;
 }
 
@@ -266,7 +266,7 @@ inline bool Entity::Deserialize(uint64_t* p, const rapidjson::Value & document, 
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetUint64();
     return true;
 }
 
@@ -275,7 +275,7 @@ inline bool Entity::Deserialize(float* p, const rapidjson::Value & document, con
     if (itr == document.MemberEnd())
         return false;
 
-    *p = itr->value.GetInt();
+    *p = itr->value.GetDouble();
     return true;
 }
 
